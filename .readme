@@ -1,1 +1,11 @@
 # Read me is coming soon....
+
+## How to run in development
+`npm run dev` to start client and server concurrently
+alternatively:
+
+### Server
+- `cd packages/server/src && node server.ts`
+
+### Client
+- `cd packages/client && npm start`
