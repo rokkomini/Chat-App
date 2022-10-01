@@ -3,51 +3,105 @@ import React, { useEffect, useState } from "react";
 import ChatItem from "@my-chat-app/shared";
 
 export default function ChatRoomPage() {
-  const [username, setUsername] = useState<string>('')
-  const [messages, setMessages] = useState<ChatItem | undefined>();
+  const [author, setAuthor] = useState<string>("");
+  const [messages, setMessages] = useState<ChatItem[]>([]);
+  const [messageText, setMessageText] = useState<string>("");
+  const [error, setError] = useState<string | undefined>();
+  const [displayAuthor, setDisplayAuthor] = useState<boolean>(false);
 
-  const sendMessage = () => {
-    console.log(`sending ${messages}`);
-  };
+  axios.defaults.baseURL =
+    process.env.REACT_APP_CHAT_API || "http://localhost:3001";
 
-/*   const fetchMessages = async (): Promise<ChatItem[]> => {
-    const response = await axios.get<ChatItem[]>([])
+  function addAuthor(author: string) {
+    setAuthor(author);
+    setDisplayAuthor(true);
   }
- */
-  axios.defaults.baseURL = process.env.REACT_APP_CHAT_API || "http://localhost:3001";
-  const fetchChat = async (): Promise<ChatItem> => {
-    const response = await axios.get<ChatItem>("/chat");
-    return response.data;
-  };
+
+  function removeAuthor() {
+    setAuthor('')
+    setDisplayAuthor(false)
+  }
+
+  async function fetchChat() {
+    const response = await axios.get<ChatItem[]>("/chat");
+    console.log("fetch data", response.data);
+    setMessages(response.data);
+  }
 
   useEffect(() => {
-    fetchChat().then(setMessages);
+    fetchChat();
   }, []);
+
+  async function sendMessage(
+    author: string,
+    messageText: string
+  ): Promise<void> {
+    const chatItem: ChatItem = {
+      author: author,
+      text: messageText,
+      timeStamp: new Date(),
+    };
+
+    try {
+      await axios.post("/chat", chatItem);
+      fetchChat();
+    } catch (err) {
+      setMessages([]);
+      setError("Something went wrong fetching messages");
+    } finally {
+      setMessageText("");
+    }
+  }
 
   return (
     <div className="container">
       <h1 className="header">Chat app</h1>
-      <label htmlFor="">Please type your name </label>
-      <input className="nameInput" placeholder="your name" onChange={e => setUsername(e.target.value)}/>
-      <button>Thats my name</button>
+      {displayAuthor ? (
+        <div>
+          <h2>Welcome {author}</h2>
+           <p>New user?</p> <button onClick={(e) => removeAuthor()}>Click to change name</button>
+        </div>
+       
+      ) : (
+        <div>
+          <label htmlFor="">Please type your name </label>
+          <input
+            className="nameInput"
+            placeholder="your name"
+            type="text"
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+          />
+          <button onClick={(e) => addAuthor(author)}>Thats my name</button>
+        </div>
+      )}
+      
       <div>
         <div className="chat-container">
           <div className="message-list">
-            {messages ? (
-               <div className="message-bubble">
-               <p className="author">NAME</p>
-               <p className="timestamp">{(messages.timeStamp).toString()}</p>
-               <p className="message-text">
-                 {messages.text}
-               </p>
-             </div>
+            {messages.length > 0 ? (
+              messages &&
+              messages.map((message) => (
+                <div className="message-bubble" key={message._id}>
+                  <p className="author">{message.author}</p>
+                  <p className="timestamp">{message.timeStamp.toString()}</p>
+                  <p className="message-text">{message.text}</p>
+                </div>
+              ))
             ) : (
               <h4>No messages to show</h4>
             )}
-           
           </div>
-          <input className="message-input" />
-          <button className="send-button" onClick={sendMessage}>
+          <input
+            className="message-input"
+            type="text"
+            value={messageText}
+            onChange={(e) => setMessageText(e.target.value)}
+          />
+          <button
+            className="send-button"
+            onClick={(e) => sendMessage(author, messageText)}
+          >
             Send message
           </button>
         </div>
