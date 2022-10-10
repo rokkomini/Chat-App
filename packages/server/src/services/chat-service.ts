@@ -5,6 +5,9 @@ const saveChat = async (chatItem: ChatItem): Promise<ChatItem[]> => {
     if (!chatItem.text || chatItem.text == '') {
         throw new Error('Nothing written')
     }
+    if(!chatItem.author || chatItem.author == '') {
+        throw new Error('No author')
+    }
 
     chatItem.timeStamp = new Date()
 

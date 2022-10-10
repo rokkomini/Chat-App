@@ -1,4 +1,8 @@
 # Read me is coming soon....
+## WIP
+- Be able to sign up and sign in
+- Error handling
+- Frontend styling
 
 ## How to run in development
 `npm run dev` to start client and server concurrently
