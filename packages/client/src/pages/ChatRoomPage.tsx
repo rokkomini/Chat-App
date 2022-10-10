@@ -46,7 +46,9 @@ export default function ChatRoomPage() {
       await axios.post("/chat", chatItem);
       fetchChat();
     } catch (err) {
-      setMessages([]);
+      if (author === ''){
+        setError('Please enter your name') 
+      } else
       setError("Something went wrong fetching messages");
     } finally {
       setMessageText("");
@@ -56,6 +58,7 @@ export default function ChatRoomPage() {
   return (
     <div className="container">
       <h1 className="header">Chat app</h1>
+      {error ? (<h2>{error}</h2>) : (null) }
       {displayAuthor ? (
         <div>
           <h2>Welcome {author}</h2>
