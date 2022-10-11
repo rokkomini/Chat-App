@@ -1,10 +1,10 @@
 import express, { Application, json, Request, Response } from "express";
 import cors from "cors";
 import dotenv from 'dotenv'
-import ChatItem from "@my-chat-app/shared";
+import {ChatItem} from "@my-chat-app/shared";
 const app: Application = express();
 import chatRouter from './controllers/chat'
-import { setUpMongoDb} from './models/chat-repository'
+import { setUpMongoDb} from './models/common'
 
 dotenv.config()
 

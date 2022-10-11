@@ -1,6 +1,6 @@
 //Connection to mongoDB and the its functions
 
-import ChatItem from "@my-chat-app/shared";
+import { ChatItem } from "@my-chat-app/shared";
 import { connect, model, Schema } from "mongoose";
 
 const ChatSchema = new Schema(
@@ -15,10 +15,6 @@ const ChatSchema = new Schema(
 //Talar om att modellen följer typen av Interfacet ChatItem
 const ChatModel = model<ChatItem>("ChatItem", ChatSchema);
 
-const setUpMongoDb = async (url: string) => {
-  await connect(url).then(() => console.log("Connected to MongoDB"));
-};
-
 //Ska returnera en array, async funktioner måste returnera en promise,
 // för typescript behöver den returnera en promise av specifik typ.
 const loadAllChatMessages = async (): Promise<ChatItem[]> => {
@@ -32,4 +28,4 @@ const saveChatMessage = async (chatItem: ChatItem): Promise<void> => {
   newModel.save();
 };
 
-export { setUpMongoDb, loadAllChatMessages, saveChatMessage };
+export { loadAllChatMessages, saveChatMessage };

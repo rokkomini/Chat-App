@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ChatItem from "@my-chat-app/shared";
+import { Input } from "@chakra-ui/react";
 
 export default function ChatRoomPage() {
   const [author, setAuthor] = useState<string>("");
@@ -18,8 +19,8 @@ export default function ChatRoomPage() {
   }
 
   function removeAuthor() {
-    setAuthor('')
-    setDisplayAuthor(false)
+    setAuthor("");
+    setDisplayAuthor(false);
   }
 
   async function fetchChat() {
@@ -46,10 +47,9 @@ export default function ChatRoomPage() {
       await axios.post("/chat", chatItem);
       fetchChat();
     } catch (err) {
-      if (author === ''){
-        setError('Please enter your name') 
-      } else
-      setError("Something went wrong fetching messages");
+      if (author === "") {
+        setError("Please enter your name");
+      } else setError("Something went wrong fetching messages");
     } finally {
       setMessageText("");
     }
@@ -58,13 +58,13 @@ export default function ChatRoomPage() {
   return (
     <div className="container">
       <h1 className="header">Chat app</h1>
-      {error ? (<h2>{error}</h2>) : (null) }
+      {error ? <h2>{error}</h2> : null}
       {displayAuthor ? (
         <div>
           <h2>Welcome {author}</h2>
-           <p>New user?</p> <button onClick={(e) => removeAuthor()}>Click to change name</button>
+          <p>New user?</p>{" "}
+          <button onClick={(e) => removeAuthor()}>Click to change name</button>
         </div>
-       
       ) : (
         <div>
           <label htmlFor="">Please type your name </label>
@@ -78,7 +78,7 @@ export default function ChatRoomPage() {
           <button onClick={(e) => addAuthor(author)}>Thats my name</button>
         </div>
       )}
-      
+
       <div>
         <div className="chat-container">
           <div className="message-list">
@@ -95,11 +95,13 @@ export default function ChatRoomPage() {
               <h4>No messages to show</h4>
             )}
           </div>
-          <input
+          <Input
             className="message-input"
             type="text"
+            variant="outline"
+            placeholder="Type your message here"
             value={messageText}
-            onChange={(e) => setMessageText(e.target.value)}
+            onChange={(e:any) => setMessageText(e.target.value)}
           />
           <button
             className="send-button"
