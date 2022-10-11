@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 const app: Application = express();
 import chatRouter from "./controllers/chat";
 import { setUpMongoDb } from "./models/common";
+import userRouter from "./controllers/user";
 
 dotenv.config();
 
@@ -16,19 +17,7 @@ const MONGODB_URL: string =
   process.env.MONGO_URL || "mongodb://localhost:27017/chatt_app";
 
 app.use("/chat", chatRouter);
-//app.use('/auth', require('./controllers/auth.ts'))
-
-/* app.get("/hello", (req: Request, res: Response) => {
-  res.send("Hello, World!");
-});
-
-app.get('/chat', (req: Request, res: Response<ChatItem>) => {
-  res.send({
-    id: '123',
-    text: 'HELLOOO youu',
-    timeStamp: new Date
-  })
-}) */
+app.use('/user', userRouter)
 
 app.listen(PORT, async function () {
   await setUpMongoDb(MONGODB_URL);
