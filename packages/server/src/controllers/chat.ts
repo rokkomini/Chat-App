@@ -1,16 +1,15 @@
-import ChatItem from "@my-chat-app/shared";
+import { ChatItem } from "@my-chat-app/shared";
 import express, { Router, Request, Response } from "express";
 import { loadChats, saveChat } from "../services/chat-service";
 
 const chatRouter = express.Router();
 
 chatRouter.get("/", async (req: Request, res: Response) => {
-  try{
+  try {
     res.status(200).send(await loadChats());
   } catch (error) {
-    res.status(500).send('Something went went wrong')
+    res.status(500).send("Something went went wrong");
   }
- 
 });
 
 chatRouter.post(

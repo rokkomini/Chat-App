@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import ChatItem from "@my-chat-app/shared";
 import { Input } from "@chakra-ui/react";
+import { ChatItem } from "@my-chat-app/shared"
 
 export default function ChatRoomPage() {
   const [author, setAuthor] = useState<string>("");
@@ -101,7 +101,7 @@ export default function ChatRoomPage() {
             variant="outline"
             placeholder="Type your message here"
             value={messageText}
-            onChange={(e:any) => setMessageText(e.target.value)}
+            onChange={(e: any) => setMessageText(e.target.value)}
           />
           <button
             className="send-button"
