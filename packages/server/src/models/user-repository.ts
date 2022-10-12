@@ -28,4 +28,14 @@ const loadUserByUsername = async (
   return await UserModel.findOne({ username: username }).exec();
 };
 
-export { saveNewUser, loadUserByUsername };
+const checkCredentials = async (
+  username: string, password: string
+): Promise<UserItem | null> => {
+  const user = await UserModel.findOne({username: username})
+  if (user && await bcrypt.compare(password, user.password)) {
+    return user
+  }
+  return null
+};
+
+export { saveNewUser, loadUserByUsername, checkCredentials };
