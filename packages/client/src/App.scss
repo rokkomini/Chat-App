@@ -10,7 +10,6 @@ font-family: 'Trispace', sans-serif;
   display: flex;
 justify-content: space-evenly;
   align-items: center;
-  border: solid 2px;
   margin: 10em auto;
   img {
     width: 500px;
@@ -22,6 +21,21 @@ justify-content: space-evenly;
   width: 700px;
 
 }
+
+@media screen and (max-width: 800px) {
+  .container{
+    width: auto;
+  }
+  .startpage-wrapper {
+    flex-direction: column;
+    width: auto;
+    img {
+      width: 300px;
+    }
+  }
+}
+  
+
 
 .login-form{
   border: solid 2px;
@@ -75,10 +89,6 @@ justify-content: space-evenly;
   }
 }
 
-.container {
-  margin: 3em auto;
-  width: 700px;
-}
 
 /* .message-input {
   margin-top: 30px;
