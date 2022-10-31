@@ -10,9 +10,15 @@ import {
 } from "@chakra-ui/react";
 import { UserItem } from "@my-chat-app/shared";
 
-export default function LoginForm() {
+export default function LoginForm(props: {handleOnClick: (userItem: UserItem) => void, button: string}) {
   const [input, setInput] = useState("");
-  const [user, setUser] = useState<UserItem>();
+  const [user, setUser] = useState<UserItem>({ username: "", password: "" });
+  function updateForm(value : {}) {
+    return setUser((prev) => {
+      return { ...prev, ...value }
+    })
+  }
+ 
 
   const handleInputChange = (e: { target: { value: React.SetStateAction<string>; }; }) => setInput(e.target.value);
 
@@ -25,7 +31,7 @@ export default function LoginForm() {
           <div className="login-form">
               <FormControl isInvalid={isError}>
                 <FormLabel>Username</FormLabel>
-                <Input type="username" value={input} onChange={handleInputChange} />
+                <Input type="username" value={user.username} onChange={(e) => updateForm({username: e.target.value})} />
                 {!isError ? (
                   <FormHelperText>
                     Enter username to login
@@ -34,7 +40,7 @@ export default function LoginForm() {
                   <FormErrorMessage>Username is required.</FormErrorMessage>
                 )}
                 <FormLabel>Password</FormLabel>
-                <Input type="password" value={input} onChange={handleInputChange} />
+                <Input type="password" value={user.password} onChange={(e) => updateForm({password: e.target.value})} />
                 {!isError ? (
                   <FormHelperText>
                     Please enter your password
@@ -42,7 +48,7 @@ export default function LoginForm() {
                 ) : (
                   <FormErrorMessage>Password is required.</FormErrorMessage>
                 )}
-                <Button colorScheme='black'>Log in</Button>
+                <Button colorScheme='black' onClick={() => props.handleOnClick}>{props.button}</Button>
               </FormControl>
               </div>
           </Container>
