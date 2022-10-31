@@ -1,19 +1,34 @@
-import React from 'react'
+import React from "react";
 
 export default function StartPage() {
   return (
-    <div>
+    <div className="container">
+      <div>
+        <h1>Chatroom</h1>
+      </div>
+      <div className="startpage-wrapper">
+        <div className="box-image"> <img src="https://images.unsplash.com/photo-1530811761207-8d9d22f0a141?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="neon sign of speak bubble" /></div>
         <div>
-            <h1>Welcome to startpage</h1>
+          <ul>
+            <li>  <h2>
+            <a href="/login-user">
+              Login
+            </a>
+          </h2></li>
+            <li><h2>
+            <a href="/create-user">Sign up</a>
+          </h2></li>
+            <li> <h2>
+          <a href="/chatroom">Stay anonymous</a>
+        </h2></li>
+          </ul>
+        
+          
         </div>
-        <div>
-            <div><h2><a href="/login-user">Already a member? Login and start chatting!</a></h2></div>
-            <div><h2><a href="/create-user">Not a member? Sign up and start chatting!</a></h2></div>
-        </div>
-        <div>
-            
-            <h2><a href="/chatroom">Go to chatroom</a></h2>
-        </div>
+      </div>
+      <div>
+       
+      </div>
     </div>
-  )
+  );
 }
