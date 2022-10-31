@@ -1,7 +1,7 @@
 //Connection to mongoDB and the its functions
 
 import { ChatItem } from "@my-chat-app/shared";
-import { connect, model, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
 const ChatSchema = new Schema(
   {

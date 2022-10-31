@@ -1,2 +1,2 @@
-export {UserItem} from "./user-item";
-export {ChatItem} from "./chat-item";
+export type { UserItem } from "./user-item";
+export type { ChatItem } from "./chat-item";

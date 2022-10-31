@@ -1,24 +1,26 @@
-import ChatItem from "@my-chat-app/shared";
-import { loadAllChatMessages, saveChatMessage } from "../models/chat-repository";
+import { ChatItem } from "@my-chat-app/shared";
+import {
+  loadAllChatMessages,
+  saveChatMessage,
+} from "../models/chat-repository";
 
 const saveChat = async (chatItem: ChatItem): Promise<ChatItem[]> => {
-    if (!chatItem.text || chatItem.text == '') {
-        throw new Error('Nothing written')
-    }
-    if(!chatItem.author || chatItem.author == '') {
-        throw new Error('No author')
-    }
+  if (!chatItem.text || chatItem.text == "") {
+    throw new Error("Nothing written");
+  }
+  if (!chatItem.author || chatItem.author == "") {
+    throw new Error("No author");
+  }
 
-    chatItem.timeStamp = new Date()
+  chatItem.timeStamp = new Date();
 
-    await saveChatMessage(chatItem)
+  await saveChatMessage(chatItem);
 
-    return loadAllChatMessages()
-}
+  return loadAllChatMessages();
+};
 
 const loadChats = async (): Promise<ChatItem[]> => {
-    return await loadAllChatMessages()
-}
+  return await loadAllChatMessages();
+};
 
-
-export {saveChat, loadChats}
+export { saveChat, loadChats };
