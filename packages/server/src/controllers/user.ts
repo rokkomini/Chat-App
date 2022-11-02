@@ -21,6 +21,7 @@ userRouter.post(
 );
 
 userRouter.post("/login", async (req: Request, res: Response) => {
+  console.log('server login req body:', req.body);
   try {
     const foundUser = await loginUser(req.body);
     res.status(202).send(foundUser)

@@ -9,18 +9,27 @@ import {
   Button
 } from "@chakra-ui/react";
 import { UserItem } from "@my-chat-app/shared";
+export interface FormProps {
+    username: string;
+    password: string;
+    setUsername: (username: string) => void;
+    setPassword: (password: string) => void;
+    formButton: string;
+    handleOnClick: (userItem: UserItem) => void;
+    error: string;
+ }
 
-export default function LoginForm(props: {handleOnClick: (userItem: UserItem) => void, button: string}) {
+export default function LoginForm(form: FormProps) {
   const [input, setInput] = useState("");
-  const [user, setUser] = useState<UserItem>({ username: "", password: "" });
+  const [user, setUser] = useState<UserItem>({ username: '', password: "" });
+  const [username, setUsername] = useState<String>("");
+  const [password, setPassword] = useState<String>("");
+
   function updateForm(value : {}) {
     return setUser((prev) => {
       return { ...prev, ...value }
     })
   }
- 
-
-  const handleInputChange = (e: { target: { value: React.SetStateAction<string>; }; }) => setInput(e.target.value);
 
   const isError = input === "";
   return (
@@ -31,8 +40,8 @@ export default function LoginForm(props: {handleOnClick: (userItem: UserItem) =>
           <div className="login-form">
               <FormControl isInvalid={isError}>
                 <FormLabel>Username</FormLabel>
-                <Input type="username" value={user.username} onChange={(e) => updateForm({username: e.target.value})} />
-                {!isError ? (
+                <Input type="username" value={form.username} onChange={(e) => form.setUsername(e.target.value)}/>
+                {!form.error ? (
                   <FormHelperText>
                     Enter username to login
                   </FormHelperText>
@@ -40,15 +49,15 @@ export default function LoginForm(props: {handleOnClick: (userItem: UserItem) =>
                   <FormErrorMessage>Username is required.</FormErrorMessage>
                 )}
                 <FormLabel>Password</FormLabel>
-                <Input type="password" value={user.password} onChange={(e) => updateForm({password: e.target.value})} />
-                {!isError ? (
+                <Input type="password" value={form.password} onChange={(e) => form.setPassword(e.target.value)} />
+                {form.password === ''? (
                   <FormHelperText>
                     Please enter your password
                   </FormHelperText>
                 ) : (
                   <FormErrorMessage>Password is required.</FormErrorMessage>
                 )}
-                <Button colorScheme='black' onClick={() => props.handleOnClick}>{props.button}</Button>
+                <Button colorScheme='black' onClick={() => form.handleOnClick(user)}>{form.formButton}</Button>
               </FormControl>
               </div>
           </Container>

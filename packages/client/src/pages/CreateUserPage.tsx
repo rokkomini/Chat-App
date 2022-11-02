@@ -6,6 +6,6 @@ export default function CreateUserPage() {
     console.log('Sign up')
   }
   return (
-    <div><LoginForm button='Sign up' handleOnClick={handleOnSignUp}  /></div>
+    <div>{/* <LoginForm formButton='Sign up' handleOnClick={handleOnSignUp}  /> */}</div>
   )
 }
