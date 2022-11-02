@@ -30,3 +30,5 @@ const authenticateToken = async (
     return res.status(401).send("No token");
   }
 };
+
+export default authenticateToken;

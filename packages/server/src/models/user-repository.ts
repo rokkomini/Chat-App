@@ -25,7 +25,7 @@ const saveNewUser = async (userItem: UserItem): Promise<void> => {
 const loadUserByUsername = async (
   username: string
 ): Promise<UserItem | null> => {
-  return await UserModel.findOne({ username: username }).exec();
+  return await UserModel.findOne({ username: username }).select('-password').exec();
 };
 
 const checkCredentials = async (

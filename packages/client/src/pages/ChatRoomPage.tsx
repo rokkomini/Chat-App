@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Input } from "@chakra-ui/react";
-import { ChatItem } from "@my-chat-app/shared"
+import { ChatItem } from "@my-chat-app/shared";
 
 export default function ChatRoomPage() {
   const [author, setAuthor] = useState<string>("");
@@ -29,8 +29,24 @@ export default function ChatRoomPage() {
     setMessages(response.data);
   }
 
+  const token = localStorage.getItem("jwt");
+
+  async function getUser() {
+    await axios
+      .get("/user", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log("response from geuser client", response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     fetchChat();
+    getUser();
   }, []);
 
   async function sendMessage(
