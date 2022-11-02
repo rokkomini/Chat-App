@@ -11,11 +11,12 @@ userRouter.get("/", async (req: Request, res: Response) => {
 
 userRouter.post(
   "/register",
-  async (req: Request<UserItem>, res: Response<UserItem | void>) => {
+  async (req: Request<UserItem>, res: Response<UserItem | any>) => {
+    console.log('server create user req body:', req.body);
     try {
       res.status(201).send(await saveUser(req.body));
     } catch (e) {
-      res.sendStatus(400);
+      res.status(400).send('Error when registering user');
     }
   }
 );
@@ -26,7 +27,7 @@ userRouter.post("/login", async (req: Request, res: Response) => {
     const foundUser = await loginUser(req.body);
     res.status(202).send(foundUser)
   } catch {
-    res.status(401).send("Invalid credentials");
+    res.status(401).send("Wrong username or password");
   }
 });
 
