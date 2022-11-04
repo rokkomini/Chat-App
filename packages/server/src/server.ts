@@ -22,6 +22,6 @@ app.use('/user', userRouter)
 app.listen(PORT, async function () {
   await setUpMongoDb(MONGODB_URL);
   console.log(
-    `App is listening on port ${PORT} and testing mongo db url ${MONGODB_URL}!`
+    `App is listening on port ${PORT}!`
   );
 });
