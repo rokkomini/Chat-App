@@ -4,6 +4,7 @@ import { Input } from "@chakra-ui/react";
 import { ChatItem } from "@my-chat-app/shared";
 import Navbar from "../components/Navbar";
 import ChatList from "../components/ChatList";
+import { useNavigate } from "react-router-dom";
 
 export default function ChatRoomPage() {
   const [author, setAuthor] = useState<string>("");
@@ -16,20 +17,10 @@ export default function ChatRoomPage() {
   axios.defaults.baseURL =
     process.env.REACT_APP_CHAT_API || "http://localhost:3001";
   const token = localStorage.getItem("jwt");
-
-  function addAuthor(author: string) {
-    setAuthor(author);
-    setDisplayAuthor(true);
-  }
-
-  function removeAuthor() {
-    setAuthor("");
-    setDisplayAuthor(false);
-  }
+  const navigate = useNavigate();
 
   const fetchChat = async () => {
     const response = await axios.get<ChatItem[]>("/chat");
-    console.log("fetch data", response.data);
     setMessages(response.data);
   };
 
@@ -43,13 +34,14 @@ export default function ChatRoomPage() {
         setIsLoggedIn(true);
       })
       .catch((error) => {
+        navigate("/");
         setIsLoggedIn(false);
       });
   };
 
   useEffect(() => {
-    fetchChat();
     getUser();
+    fetchChat();
   }, []);
 
   async function sendMessage(
@@ -73,61 +65,25 @@ export default function ChatRoomPage() {
       setMessageText("");
     }
   }
-  /*
-
-
-   const NotLoggedIn = () => {
-    if (isLoggedIn === false) {
-   
-      {
-        error ? <h2>{error}</h2> : null;
-      }
-      {
-        displayAuthor ? (
-          <div>
-            <h2>Welcome {author}</h2>
-            <p>New user?</p>{" "}
-            <button onClick={(e) => removeAuthor()}>
-              Click to change name
-            </button>
-          </div>
-        ) : (
-          <div>
-            <label htmlFor="">Please type your name </label>
-            <input
-              className="nameInput"
-              placeholder="your name"
-              type="text"
-              value={author}
-              onChange={(e) => setAuthor(e.target.value)}
-            />
-            <button onClick={(e) => addAuthor(author)}>Thats my name</button>
-          </div>
-        );
-      }
-    } else {
-      return null;
-    }
-  } */
 
   return (
     <div>
-      {!author ? (null) : (<Navbar username={author} />)}
-      
+      {!author ? null : <Navbar username={author} />}
+
       <div className="container">
         <h1 className="header">Chat app</h1>
 
         <div>
           <div className="chat-container">
             <div className="message-list">
-                {messages.length > 0 ? (
-                  messages &&
-                  messages.map((message) => (
-                    <ChatList currentAuthor={author} chatItem={message}/>
-                  ))
-                ) : (
-                  <h4>No messages to show</h4>
-                )}
+              {messages.length > 0 ? (
+                messages &&
+                messages.map((message) => (
+                  <ChatList currentAuthor={author} chatItem={message} />
+                ))
+              ) : (
+                <h4>No messages to show</h4>
+              )}
             </div>
             <Input
               className="message-input"
