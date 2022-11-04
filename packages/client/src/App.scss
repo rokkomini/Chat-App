@@ -68,10 +68,7 @@ html {
   padding: 10px;
   height: 450px;
   overflow-y: scroll;
-  display: flex;
 
-  flex-direction: column;
-  justify-content: flex-end;
   .my-msg-bubble {
     background-color: rgb(10, 63, 112);
     color: white;
