@@ -9,12 +9,12 @@ import { saveUser } from "../services/register-service";
 const userRouter = express.Router();
 
 userRouter.get(
-  "/user",
+  "/getuser",
   authenticateToken,
   async (req: JwtRequest<UserItem>, res: Response) => {
     console.log("get user", req.jwt);
     try {
-      const user = await loadUserByUsername(req.jwt?.username as string);
+      const user = req.jwt?.username
       if (user) {
         res.status(200).send(user);
       }
@@ -27,7 +27,6 @@ userRouter.get(
 userRouter.post(
   "/register",
   async (req: Request<UserItem>, res: Response<UserItem | any>) => {
-    console.log("server create user req body:", req.body);
     try {
       res.status(201).send(await saveUser(req.body));
     } catch (e) {
@@ -37,7 +36,6 @@ userRouter.post(
 );
 
 userRouter.post("/login", async (req: Request, res: Response) => {
-  console.log("server login req body:", req.body);
   try {
     const foundUser = await loginUser(req.body);
     res.status(202).send(foundUser);

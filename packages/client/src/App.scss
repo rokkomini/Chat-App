@@ -1,6 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Trispace:wght@100;300&display=swap");
 
-* {
+html {
+  color: white;
+  background-color: black;
+  font-family: "Trispace", sans-serif;
+}
+
+.global-div {
   color: white;
   background-color: black;
   font-family: "Trispace", sans-serif;
@@ -19,6 +25,7 @@
 .container {
   margin: 3em auto;
   width: 700px;
+
 }
 
 @media screen and (max-width: 800px) {
