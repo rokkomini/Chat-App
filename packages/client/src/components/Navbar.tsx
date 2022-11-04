@@ -4,7 +4,7 @@ import {
     Button,
   } from "@chakra-ui/react";
 
-export default function Navbar(userItem : UserItem) {
+export default function Navbar(props: {username : string}) {
 
     const logout = () => {
         localStorage.clear();
@@ -13,9 +13,9 @@ export default function Navbar(userItem : UserItem) {
       };
 
   return (
-    <div>Navbar
-        <h2>{userItem.username} chatroom</h2>
-        <Button onClick={logout}>Logout</Button>
+    <div className='navbar'>
+        <h2>{props.username}'s chatroom</h2>
+        <Button colorScheme='dark' onClick={logout}>Logout</Button>
     </div>
   )
 }

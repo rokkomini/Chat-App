@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import { Input } from "@chakra-ui/react";
 import { ChatItem } from "@my-chat-app/shared";
 import Navbar from "../components/Navbar";
+import ChatList from "../components/ChatList";
 
 export default function ChatRoomPage() {
   const [author, setAuthor] = useState<string>("");
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [messages, setMessages] = useState<ChatItem[]>([]);
   const [messageText, setMessageText] = useState<string>("");
   const [error, setError] = useState<string | undefined>();
@@ -29,7 +31,7 @@ export default function ChatRoomPage() {
     const response = await axios.get<ChatItem[]>("/chat");
     console.log("fetch data", response.data);
     setMessages(response.data);
-  }
+  };
 
   const getUser = () => {
     axios
@@ -37,12 +39,13 @@ export default function ChatRoomPage() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        console.log("response from get user client", response);
+        setAuthor(response.data);
+        setIsLoggedIn(true);
       })
       .catch((error) => {
-        console.log(error);
+        setIsLoggedIn(false);
       });
-  }
+  };
 
   useEffect(() => {
     fetchChat();
@@ -70,14 +73,17 @@ export default function ChatRoomPage() {
       setMessageText("");
     }
   }
+  /*
 
-  return (
-    <div>
-      <Navbar />
-      <div className="container">
-        <h1 className="header">Chat app</h1>
-        {error ? <h2>{error}</h2> : null}
-        {displayAuthor ? (
+
+   const NotLoggedIn = () => {
+    if (isLoggedIn === false) {
+   
+      {
+        error ? <h2>{error}</h2> : null;
+      }
+      {
+        displayAuthor ? (
           <div>
             <h2>Welcome {author}</h2>
             <p>New user?</p>{" "}
@@ -97,22 +103,31 @@ export default function ChatRoomPage() {
             />
             <button onClick={(e) => addAuthor(author)}>Thats my name</button>
           </div>
-        )}
+        );
+      }
+    } else {
+      return null;
+    }
+  } */
+
+  return (
+    <div>
+      {!author ? (null) : (<Navbar username={author} />)}
+      
+      <div className="container">
+        <h1 className="header">Chat app</h1>
+
         <div>
           <div className="chat-container">
             <div className="message-list">
-              {messages.length > 0 ? (
-                messages &&
-                messages.map((message) => (
-                  <div className="message-bubble" key={message._id}>
-                    <p className="author">{message.author}</p>
-                    <p className="timestamp">{message.timeStamp.toString()}</p>
-                    <p className="message-text">{message.text}</p>
-                  </div>
-                ))
-              ) : (
-                <h4>No messages to show</h4>
-              )}
+                {messages.length > 0 ? (
+                  messages &&
+                  messages.map((message) => (
+                    <ChatList currentAuthor={author} chatItem={message}/>
+                  ))
+                ) : (
+                  <h4>No messages to show</h4>
+                )}
             </div>
             <Input
               className="message-input"
