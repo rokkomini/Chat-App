@@ -15,8 +15,6 @@ const authenticateToken = async (
   res: Response,
   next: any
 ) => {
-  res.send("hello");
-
   const token: string | undefined = req.header("Authorization")?.split(" ")[1];
   if (token) {
     try {
@@ -30,3 +28,5 @@ const authenticateToken = async (
     return res.status(401).send("No token");
   }
 };
+
+export default authenticateToken;

@@ -66,7 +66,7 @@ export default function LoginRegisterForm(form: FormProps) {
             />
 
             {form.error === "" ? (
-              <FormHelperText>{form.usernameMsg}</FormHelperText>
+              <FormHelperText>{form.passwordMsg}</FormHelperText>
             ) : (
               <FormHelperText>{form.error}</FormHelperText>
             )}
