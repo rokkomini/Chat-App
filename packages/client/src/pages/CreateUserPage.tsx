@@ -20,8 +20,6 @@ export default function CreateUserPage() {
         password: user.password,
       })
       .then((response: any) => {
-        const token = response.data;
-        localStorage.setItem("jwt", token.token);
         navigate("/login-user");
       })
       .catch((e: any) => {
