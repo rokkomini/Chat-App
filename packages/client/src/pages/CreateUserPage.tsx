@@ -3,7 +3,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginRegisterForm from "../components/LoginRegisterForm";
-import LoginForm from "../components/LoginRegisterForm";
 
 export default function CreateUserPage() {
   const [user, setUser] = useState<UserItem>({ username: "", password: "" });

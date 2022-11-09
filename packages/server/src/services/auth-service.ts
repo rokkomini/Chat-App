@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { send } from "process";
 
 export type TokenPayload = {
   username: string;

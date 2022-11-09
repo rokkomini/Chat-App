@@ -1,5 +1,5 @@
 import { ChatItem } from "@my-chat-app/shared";
-import express, { Router, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import { loadChats, saveChat } from "../services/chat-service";
 
 const chatRouter = express.Router();

@@ -2,15 +2,13 @@ import React, { useState } from "react";
 import {
   FormControl,
   FormLabel,
-  FormErrorMessage,
   FormHelperText,
   Input,
   Container,
   Button,
-  Alert,
-  AlertIcon,
 } from "@chakra-ui/react";
 import { UserItem } from "@my-chat-app/shared";
+
 export interface FormProps {
   username: string;
   password: string;
@@ -24,18 +22,7 @@ export interface FormProps {
 }
 
 export default function LoginRegisterForm(form: FormProps) {
-  const [input, setInput] = useState("");
   const [user, setUser] = useState<UserItem>({ username: "", password: "" });
-  const [username, setUsername] = useState<String>("");
-  const [password, setPassword] = useState<String>("");
-
-  function updateForm(value: {}) {
-    return setUser((prev) => {
-      return { ...prev, ...value };
-    });
-  }
-
-  let isError = false;
 
   return (
     <div className="container">

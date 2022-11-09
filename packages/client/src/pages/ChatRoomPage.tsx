@@ -12,7 +12,6 @@ export default function ChatRoomPage() {
   const [messages, setMessages] = useState<ChatItem[]>([]);
   const [messageText, setMessageText] = useState<string>("");
   const [error, setError] = useState<string | undefined>();
-  const [displayAuthor, setDisplayAuthor] = useState<boolean>(false);
 
   axios.defaults.baseURL =
     process.env.REACT_APP_CHAT_API || "http://localhost:3001";

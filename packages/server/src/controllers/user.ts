@@ -1,7 +1,5 @@
 import { UserItem } from "@my-chat-app/shared";
 import express, { Request, Response } from "express";
-import { resolve } from "path";
-import { loadUserByUsername } from "../models/user-repository";
 import authenticateToken, { JwtRequest } from "../services/auth-service";
 import { loginUser } from "../services/login-service";
 import { saveUser } from "../services/register-service";
@@ -12,7 +10,6 @@ userRouter.get(
   "/getuser",
   authenticateToken,
   async (req: JwtRequest<UserItem>, res: Response) => {
-    console.log("get user", req.jwt);
     try {
       const user = req.jwt?.username
       if (user) {
