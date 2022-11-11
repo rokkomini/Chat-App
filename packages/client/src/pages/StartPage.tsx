@@ -4,7 +4,7 @@ export default function StartPage() {
   return (
     <div className="container">
       <div>
-        <h1>Chatroom</h1>
+        <h1>THE CHATROOM</h1>
       </div>
       <div className="startpage-wrapper">
         <div className="box-image">

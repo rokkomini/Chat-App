@@ -1,31 +1,32 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Input } from "@chakra-ui/react";
-import { ChatItem } from "@my-chat-app/shared";
-import Navbar from "../components/Navbar";
-import ChatList from "../components/ChatList";
-import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Input } from '@chakra-ui/react';
+import { ChatItem } from '@my-chat-app/shared';
+import Navbar from '../components/Navbar';
+import ChatList from '../components/ChatList';
+import { useNavigate } from 'react-router-dom';
 
 export default function ChatRoomPage() {
-  const [author, setAuthor] = useState<string>("");
+  const [author, setAuthor] = useState<string>('');
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [messages, setMessages] = useState<ChatItem[]>([]);
-  const [messageText, setMessageText] = useState<string>("");
+  const [messageText, setMessageText] = useState<string>('');
   const [error, setError] = useState<string | undefined>();
 
   axios.defaults.baseURL =
-    process.env.REACT_APP_CHAT_API || "http://localhost:3001";
-  const token = localStorage.getItem("jwt");
+    process.env.REACT_APP_CHAT_API || 'http://localhost:3001';
+  const token = localStorage.getItem('jwt');
   const navigate = useNavigate();
 
   const fetchChat = async () => {
-    const response = await axios.get<ChatItem[]>("/chat");
-    setMessages(response.data);
+    const response = await axios.get<ChatItem[]>('/chat');
+    return response.data;
+    // setMessages(response.data);
   };
 
   const getUser = () => {
     axios
-      .get("/user/getuser", {
+      .get('/user/getuser', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -33,14 +34,22 @@ export default function ChatRoomPage() {
         setIsLoggedIn(true);
       })
       .catch((error) => {
-        navigate("/");
+        navigate('/');
         setIsLoggedIn(false);
       });
   };
 
   useEffect(() => {
     getUser();
-    fetchChat();
+    const interval = setInterval(() => {
+      fetchChat()
+        .then(setMessages)
+        .catch((error) => {
+          setMessages([]);
+          setError(error.message);
+        });
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   async function sendMessage(
@@ -54,14 +63,12 @@ export default function ChatRoomPage() {
     };
 
     try {
-      await axios.post("/chat", chatItem);
+      await axios.post('/chat', chatItem);
       fetchChat();
-    } catch (err) {
-      if (author === "") {
-        setError("Please enter your name");
-      } else setError("Something went wrong fetching messages");
+    } catch {
+      setError(error);
     } finally {
-      setMessageText("");
+      setMessageText('');
     }
   }
 

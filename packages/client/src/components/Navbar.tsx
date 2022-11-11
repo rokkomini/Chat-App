@@ -1,4 +1,3 @@
-import { UserItem } from '@my-chat-app/shared'
 import React from 'react'
 import {
     Button,
@@ -9,7 +8,6 @@ export default function Navbar(props: {username : string}) {
     const logout = () => {
         localStorage.clear();
         window.location.reload();
-        console.log("user logged out");
       };
 
   return (
