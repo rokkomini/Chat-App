@@ -1,5 +1,3 @@
-//Connection to mongoDB and the its functions
-
 import { ChatItem } from "@my-chat-app/shared";
 import { model, Schema } from "mongoose";
 
