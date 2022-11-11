@@ -40,7 +40,7 @@ userRouter.post(
       try {
         res.status(201).send(await saveUser(req.body));
       } catch (e) {
-        res.status(400).send('Username is not available');
+        res.status(400).send('Choose a different username');
       }
     }
   }

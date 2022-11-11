@@ -77,7 +77,7 @@ export default function ChatRoomPage() {
       {!author ? null : <Navbar username={author} />}
 
       <div className="container">
-        <h1 className="header">Chat app</h1>
+        <h1 className="header">Get chattin</h1>
 
         <div>
           <div className="chat-container">

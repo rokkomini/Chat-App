@@ -10,6 +10,7 @@ import {
 import { UserItem } from '@my-chat-app/shared';
 
 export interface FormProps {
+  header: string;
   username: string;
   password: string;
   setUsername: (username: string) => void;
@@ -29,7 +30,9 @@ export default function LoginRegisterForm(form: FormProps) {
       <a href="/">Back to startpage</a>
 
       <Container maxW="500px">
+       
         <div className="login-form">
+        <h1>{form.header}</h1>
           <FormControl>
             {form.error === '' ? (
               ''

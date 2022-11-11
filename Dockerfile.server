@@ -10,8 +10,7 @@ RUN npm ci -w packages/server
 COPY ./packages/server ./packages/server
 COPY ./packages/shared ./packages/shared
 
-ARG SECRET_TOKEN 
-ENV JWT_SECRET=${SECRET_TOKEN}
+ENV JWT_SECRET = hdjd384832hshqehuf232hh3219hj
 
 RUN npm run build -w packages/server
 
