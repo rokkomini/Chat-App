@@ -1,17 +1,17 @@
-import { UserItem } from "@my-chat-app/shared";
-import express, { Request, Response } from "express";
-import authenticateToken, { JwtRequest } from "../services/auth-service";
-import { loginUser } from "../services/login-service";
-import { saveUser } from "../services/register-service";
+import { UserItem } from '@my-chat-app/shared';
+import express, { Request, Response } from 'express';
+import authenticateToken, { JwtRequest } from '../services/auth-service';
+import { loginUser } from '../services/login-service';
+import { saveUser } from '../services/register-service';
 
 const userRouter = express.Router();
 
 userRouter.get(
-  "/getuser",
+  '/getuser',
   authenticateToken,
   async (req: JwtRequest<UserItem>, res: Response) => {
     try {
-      const user = req.jwt?.username
+      const user = req.jwt?.username;
       if (user) {
         res.status(200).send(user);
       }
@@ -22,22 +22,36 @@ userRouter.get(
 );
 
 userRouter.post(
-  "/register",
+  '/register',
   async (req: Request<UserItem>, res: Response<UserItem | any>) => {
-    try {
-      res.status(201).send(await saveUser(req.body));
-    } catch (e) {
-      res.status(400).send("Error when registering user");
+    const user = req.body;
+
+    if (!user.username || !user.password) {
+      res.status(400).send('Username or password is missing');
+    }
+
+    if (user.username.length < 6) {
+      res.status(400).send('Username must be at least 6 characters');
+    }
+
+    if (user.password.length < 6) {
+      res.status(400).send('Password must be at least 6 characters long');
+    } else {
+      try {
+        res.status(201).send(await saveUser(req.body));
+      } catch (e) {
+        res.status(400).send('Username is not available');
+      }
     }
   }
 );
 
-userRouter.post("/login", async (req: Request, res: Response) => {
+userRouter.post('/login', async (req: Request, res: Response) => {
   try {
     const foundUser = await loginUser(req.body);
     res.status(202).send(foundUser);
   } catch {
-    res.status(401).send("Wrong username or password");
+    res.status(401).send('Wrong username or password');
   }
 });
 

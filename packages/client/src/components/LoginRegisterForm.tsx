@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   FormControl,
   FormLabel,
@@ -6,8 +6,8 @@ import {
   Input,
   Container,
   Button,
-} from "@chakra-ui/react";
-import { UserItem } from "@my-chat-app/shared";
+} from '@chakra-ui/react';
+import { UserItem } from '@my-chat-app/shared';
 
 export interface FormProps {
   username: string;
@@ -22,7 +22,7 @@ export interface FormProps {
 }
 
 export default function LoginRegisterForm(form: FormProps) {
-  const [user, setUser] = useState<UserItem>({ username: "", password: "" });
+  const [user, setUser] = useState<UserItem>({ username: '', password: '' });
 
   return (
     <div className="container">
@@ -31,33 +31,32 @@ export default function LoginRegisterForm(form: FormProps) {
       <Container maxW="500px">
         <div className="login-form">
           <FormControl>
-            <FormLabel>Username</FormLabel>
-            <Input
-              type="username"
-              value={form.username}
-              onChange={(e) => form.setUsername(e.target.value)}
-            />
-
-            {form.error === "" ? (
-              <FormHelperText>{form.usernameMsg}</FormHelperText>
+            {form.error === '' ? (
+              ''
             ) : (
               <FormHelperText>{form.error}</FormHelperText>
             )}
 
             <br />
+            <FormLabel>Username</FormLabel>
+            <Input
+              type="username"
+              placeholder="Enter username"
+              value={form.username}
+              onChange={(e) => form.setUsername(e.target.value)}
+            />
+
+            <br />
+            <br />
             <FormLabel>Password</FormLabel>
             <Input
               type="password"
+              placeholder="Enter password"
               value={form.password}
               onChange={(e) => form.setPassword(e.target.value)}
             />
 
-            {form.error === "" ? (
-              <FormHelperText>{form.passwordMsg}</FormHelperText>
-            ) : (
-              <FormHelperText>{form.error}</FormHelperText>
-            )}
-
+            <br />
             <br />
             <Button
               colorScheme="black"
